@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タカモリ新聞 世論調査</title>
+</head>
+<body>
+  <h1>タカモリ新聞 ミタニ市長選 世論調査</h1>
+
+  <form id="survey-form">
+    <label for="residentId">住民番号：</label>
+    <select id="residentId" name="residentId" required>
+      <option value="">選択してください</option>
+      <script>
+        for (let i = 1; i <= 300; i++) {
+          const val = i.toString().padStart(3, '0');
+          document.write(`<option value="${val}">${val}</option>`);
+        }
+      </script>
+    </select><br><br>
+
+    <label for="district">あなたの居住地区：</label><br>
+    <select id="district" name="district" required>
+      <option value="">選択してください</option>
+      <option value="X地区">X地区</option>
+      <option value="Y地区">Y地区</option>
+      <option value="Z地区">Z地区</option>
+    </select><br><br>
+
+    <label for="issue">最も重要だと思う争点：</label><br>
+    <select id="issue" name="issue" required>
+      <option value="">選択してください</option>
+      <option value="ゴミ焼却炉をどこに設置するか">ゴミ焼却炉をどこに設置するか</option>
+      <option value="Z地区にNIMBY施設が集中していること">Z地区にNIMBY施設が集中していること</option>
+      <option value="住民税の負担をどうするか">住民税の負担をどうするか</option>
+      <option value="ハセ市への委託を続けるかどうか">ハセ市への委託を続けるかどうか</option>
+      <option value="ゴミ排出量を減らすこと">ゴミ排出量を減らすこと</option>
+      <option value="市全体の公平性をどう考えるか">市全体の公平性をどう考えるか</option>
+    </select><br><br>
+
+    <label for="candidate">支持する候補者：</label><br>
+    <select id="candidate" name="candidate" required>
+      <option value="">選択してください</option>
+      <option value="神崎カオル">神崎カオル</option>
+      <option value="風間ショウ">風間ショウ</option>
+      <option value="姫島ルイ">姫島ルイ</option>
+      <option value="まだ決めていない">まだ決めていない</option>
+    </select><br><br>
+
+    <button type="submit">送信</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('survey-form');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (submitButton.disabled) return;
+      submitButton.disabled = true;
+
+      const data = new FormData(form);
+      const params = new URLSearchParams();
+
+      for (const pair of data.entries()) {
+        params.append(pair[0], pair[1]);
+      }
+
+      try {
+        await fetch('ここにGoogle Apps ScriptのURLを入れる', {
+          method: 'POST',
+          body: params
+        });
+
+        alert('送信が完了しました！');
+        form.reset();
+
+      } catch (error) {
+        alert('送信に失敗しました。もう一度お試しください。');
+
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
